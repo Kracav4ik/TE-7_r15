@@ -5,7 +5,7 @@
 
 const int SCREEN_WIDTH = 650;
 const int SCREEN_HEIGHT = 500;
-const char* NAME = "SDL2 Window";
+const char* const NAME = "SDL2 Window";
 
 void render(Block& block, SDL_Surface* screenSurface);
 
