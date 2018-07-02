@@ -16,9 +16,11 @@ public:
 
     const SDL_Rect* getRect();
 
-    void shift();
+    void shift(int stop);
 
-    void left();
+    void left(int stop);
 
-    void right();
+    void right(int stop);
+
+    void force_shift(int stop);
 };

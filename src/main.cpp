@@ -32,17 +32,22 @@ int main(int argc, char* argv[]) {
             if (event.type == SDL_KEYDOWN) {
                 switch (event.key.keysym.sym) {
                     case SDLK_LEFT:
-                        active_block.left();
+                        active_block.left(0);
                         break;
                     case SDLK_RIGHT:
-                        active_block.right();
+                        active_block.right(SCREEN_WIDTH);
+                        break;
+                    case SDLK_DOWN:
+                        active_block.force_shift(SCREEN_HEIGHT);
+                        break;
+                    default:
                         break;
                 }
             }
         }
         SDL_UpdateWindowSurface(window);
         SDL_Delay(20);
-        active_block.shift();
+        active_block.shift(SCREEN_HEIGHT);
     }
 
     SDL_DestroyWindow(window);
