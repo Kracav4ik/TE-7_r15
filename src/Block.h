@@ -2,6 +2,8 @@
 
 #include <SDL2/SDL_rect.h>
 
+const int BLOCK_SIZE = 50;
+
 class Block {
 private:
     SDL_Rect rect;
@@ -13,4 +15,10 @@ public:
     Block& operator=(Block&& other);
 
     const SDL_Rect* getRect();
+
+    void shift();
+
+    void left();
+
+    void right();
 };

@@ -21,3 +21,15 @@ Block& Block::operator=(Block&& other) {
 const SDL_Rect* Block::getRect() {
     return &rect;
 }
+
+void Block::shift() {
+    rect.y ++;
+}
+
+void Block::left() {
+    rect.x -= BLOCK_SIZE;
+}
+
+void Block::right() {
+    rect.x += BLOCK_SIZE;
+}
