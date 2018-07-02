@@ -1,15 +1,14 @@
-#include <SDL2/SDL.h>
-
-#include <iostream>
 #include "Block.h"
+#include "InputManager.h"
+#include "RenderManager.h"
+#include "GameManager.h"
+
+#include <SDL2/SDL.h>
+#include <iostream>
 
 const int SCREEN_WIDTH = 650;
 const int SCREEN_HEIGHT = 500;
 const char* const NAME = "SDL2 Window";
-
-bool handleInput(Block& active_block);
-void process(Block& activeBlock);
-void render(Block& block, SDL_Surface* screenSurface, SDL_Window* window);
 
 int main(int argc, char* argv[]) {
     SDL_Init(SDL_INIT_VIDEO);
@@ -21,13 +20,33 @@ int main(int argc, char* argv[]) {
         return 1;
     }
 
+    auto& input = InputManager::get();
+    auto& game = GameManager::get();
+    auto& render = RenderManager::get();
+
     Block activeBlock(0, 0, BLOCK_SIZE, BLOCK_SIZE);
     bool quit = false;
+    input.subscribe(GameEvent::QuitGame, [&quit]() {
+        quit = true;
+    });
+    input.subscribe(GameEvent::MoveRight, [&activeBlock]() {
+        activeBlock.right(SCREEN_WIDTH);
+    });
+    input.subscribe(GameEvent::MoveDown, [&activeBlock]() {
+        activeBlock.forceShift(SCREEN_HEIGHT);
+    });
+    input.subscribe(GameEvent::MoveLeft, [&activeBlock]() {
+        activeBlock.left(0);
+    });
+
+    render.addRenderable(&activeBlock);
+    game.addGameObject(&activeBlock);
+
     auto screenSurface = SDL_GetWindowSurface(window);
     while (!quit) {
-        quit = handleInput(activeBlock);
-        process(activeBlock);
-        render(activeBlock, screenSurface, window);
+        input.handleInput();
+        game.process();
+        render.render(screenSurface, window);
         SDL_Delay(20);
     }
 
@@ -36,40 +55,4 @@ int main(int argc, char* argv[]) {
     SDL_Quit();
 
     return 0;
-}
-
-bool handleInput(Block& active_block) {
-    bool quit = false;
-    SDL_Event event;
-    while (SDL_PollEvent(&event) != 0) {
-        if (event.type == SDL_QUIT) {
-            quit = true;
-        }
-        if (event.type == SDL_KEYDOWN) {
-            switch (event.key.keysym.sym) {
-                case SDLK_LEFT:
-                    active_block.left(0);
-                    break;
-                case SDLK_RIGHT:
-                    active_block.right(SCREEN_WIDTH);
-                    break;
-                case SDLK_DOWN:
-                    active_block.force_shift(SCREEN_HEIGHT);
-                    break;
-                default:
-                    break;
-            }
-        }
-    }
-    return quit;
-}
-
-void process(Block& activeBlock) {
-    activeBlock.shift(SCREEN_HEIGHT);
-}
-
-void render(Block& block, SDL_Surface* screenSurface, SDL_Window* window) {
-    SDL_FillRect(screenSurface, nullptr, SDL_MapRGB(screenSurface->format, 0x00, 0x00, 0x00));
-    SDL_FillRect(screenSurface, block.getRect(), SDL_MapRGB(screenSurface->format, 0xFF, 0xFF, 0xFF));
-    SDL_UpdateWindowSurface(window);
 }
