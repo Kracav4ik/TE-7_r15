@@ -13,6 +13,7 @@ enum class Form {
     Square,
     RightTurn,
     LeftTurn,
+    End,
 };
 
 class Piece: public Renderable {
@@ -25,7 +26,7 @@ public:
 
     void render(SDL_Surface* surface) const override;
 
-    void translate(int x, int y);
+    void translate(int dx, int dy);
 
     const std::vector<Block>& getBlocks() const;
 };

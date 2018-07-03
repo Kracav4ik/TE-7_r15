@@ -17,8 +17,7 @@ public:
     const SDL_Rect& getRect() const;
     SDL_Rect& getRect();
 
-    void shift();
-    void translate(int x, int y);
+    void translate(int dx, int dy);
 
     void render(SDL_Surface* pSurface) const override;
 };

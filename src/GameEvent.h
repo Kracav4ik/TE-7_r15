@@ -5,4 +5,6 @@ enum class GameEvent {
     MoveLeft,
     MoveRight,
     MoveDown,
+    SpawnPiece,
+    End,
 };

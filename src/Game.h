@@ -11,9 +11,15 @@ private:
 public:
     void process() override;
 
-    std::shared_ptr<Piece> getActivePiece();
+    void createRandomPiece(int x, int y);
+
+    void moveRight();
+    void moveLeft();
+    void moveDown();
 
     void render(SDL_Surface* surface) const override;
 
     void addPiece(std::shared_ptr<Piece> piece);
+
+    int collideWithLevel(int dx, int dy) const;
 };

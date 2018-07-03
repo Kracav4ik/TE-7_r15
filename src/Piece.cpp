@@ -53,9 +53,9 @@ void Piece::render(SDL_Surface* surface) const {
     }
 }
 
-void Piece::translate(int x, int y) {
+void Piece::translate(int dx, int dy) {
     for (auto& block : blocks) {
-        block.translate(x, y);
+        block.translate(dx, dy);
     }
 }
 

@@ -7,6 +7,7 @@ InputManager::InputManager() {
     keyBind[SDLK_DOWN] = GameEvent::MoveDown;
     keyBind[SDLK_LEFT] = GameEvent::MoveLeft;
     keyBind[SDLK_RIGHT] = GameEvent::MoveRight;
+    keyBind[SDLK_SPACE] = GameEvent::SpawnPiece;
 }
 
 void InputManager::handleInput() {

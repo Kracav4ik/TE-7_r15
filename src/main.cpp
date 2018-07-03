@@ -8,7 +8,7 @@
 #include <SDL2/SDL.h>
 #include <iostream>
 
-const int SCREEN_WIDTH = 650;
+const int SCREEN_WIDTH = 700;
 const int SCREEN_HEIGHT = 500;
 const char* const NAME = "SDL2 Window";
 
@@ -27,20 +27,22 @@ int main(int argc, char* argv[]) {
     auto& render = RenderManager::get();
 
     auto game = std::make_shared<Game>();
-    game->addPiece(Piece::create(Form::LBlock));
-    game->getActivePiece()->translate(SCREEN_WIDTH/2, 0);
+    game->createRandomPiece(SCREEN_WIDTH/2, 0);
     bool quit = false;
     input.subscribe(GameEvent::QuitGame, [&quit]() {
         quit = true;
     });
     input.subscribe(GameEvent::MoveRight, [&game]() {
-        game->getActivePiece()->translate(BLOCK_SIZE, 0);
+        game->moveRight();
+    });
+    input.subscribe(GameEvent::SpawnPiece, [&game]() {
+        game->createRandomPiece(SCREEN_WIDTH/2, 0);
     });
     input.subscribe(GameEvent::MoveDown, [&game]() {
-        game->getActivePiece()->translate(0, BLOCK_SIZE);
+        game->moveDown();
     });
     input.subscribe(GameEvent::MoveLeft, [&game]() {
-        game->getActivePiece()->translate(-BLOCK_SIZE, 0);
+        game->moveLeft();
     });
 
     render.addRenderable(game);
