@@ -3,6 +3,7 @@
 #include "Singleton.h"
 
 #include <vector>
+#include <memory>
 
 struct SDL_Surface;
 struct SDL_Window;
@@ -13,9 +14,9 @@ class RenderManager: public Singleton<RenderManager> {
 private:
     friend class Singleton<RenderManager>;
     RenderManager();
-    std::vector<const Renderable*> renderables;
+    std::vector<std::shared_ptr<Renderable>> renderables;
 
 public:
     void render(SDL_Surface* surface, SDL_Window* window);
-    void addRenderable(const Renderable* renderable);
+    void addRenderable(std::shared_ptr<Renderable> renderable);
 };

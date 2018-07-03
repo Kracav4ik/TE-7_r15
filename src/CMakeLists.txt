@@ -14,6 +14,10 @@ set(SOURCE_FILES
         GameEvent.h
         GameObject.h
         Renderable.h
+        Game.cpp
+        Game.h
+        Piece.cpp
+        Piece.h
 )
 
 add_executable(${EXE_NAME} ${SOURCE_FILES})

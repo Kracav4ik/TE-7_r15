@@ -3,6 +3,7 @@
 #include "Singleton.h"
 
 #include <vector>
+#include <memory>
 
 class GameObject;
 
@@ -10,9 +11,9 @@ class GameManager: public Singleton<GameManager> {
 private:
     friend class Singleton<GameManager>;
     GameManager();
-    std::vector<GameObject*> objects;
+    std::vector<std::shared_ptr<GameObject>> objects;
 
 public:
     void process();
-    void addGameObject(GameObject* object);
+    void addGameObject(std::shared_ptr<GameObject> object);
 };

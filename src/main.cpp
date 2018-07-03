@@ -2,6 +2,8 @@
 #include "InputManager.h"
 #include "RenderManager.h"
 #include "GameManager.h"
+#include "Piece.h"
+#include "Game.h"
 
 #include <SDL2/SDL.h>
 #include <iostream>
@@ -21,31 +23,33 @@ int main(int argc, char* argv[]) {
     }
 
     auto& input = InputManager::get();
-    auto& game = GameManager::get();
+    auto& gameManager = GameManager::get();
     auto& render = RenderManager::get();
 
-    Block activeBlock(0, 0, BLOCK_SIZE, BLOCK_SIZE);
+    auto game = std::make_shared<Game>();
+    game->addPiece(Piece::create(Form::LBlock));
+    game->getActivePiece()->translate(SCREEN_WIDTH/2, 0);
     bool quit = false;
     input.subscribe(GameEvent::QuitGame, [&quit]() {
         quit = true;
     });
-    input.subscribe(GameEvent::MoveRight, [&activeBlock]() {
-        activeBlock.right(SCREEN_WIDTH);
+    input.subscribe(GameEvent::MoveRight, [&game]() {
+        game->getActivePiece()->translate(BLOCK_SIZE, 0);
     });
-    input.subscribe(GameEvent::MoveDown, [&activeBlock]() {
-        activeBlock.forceShift(SCREEN_HEIGHT);
+    input.subscribe(GameEvent::MoveDown, [&game]() {
+        game->getActivePiece()->translate(0, BLOCK_SIZE);
     });
-    input.subscribe(GameEvent::MoveLeft, [&activeBlock]() {
-        activeBlock.left(0);
+    input.subscribe(GameEvent::MoveLeft, [&game]() {
+        game->getActivePiece()->translate(-BLOCK_SIZE, 0);
     });
 
-    render.addRenderable(&activeBlock);
-    game.addGameObject(&activeBlock);
+    render.addRenderable(game);
+    gameManager.addGameObject(game);
 
     auto screenSurface = SDL_GetWindowSurface(window);
     while (!quit) {
         input.handleInput();
-        game.process();
+        gameManager.process();
         render.render(screenSurface, window);
         SDL_Delay(20);
     }
