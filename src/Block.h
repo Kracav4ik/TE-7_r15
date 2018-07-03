@@ -9,10 +9,11 @@ const int BLOCK_SIZE = 50;
 class Block: public Renderable {
 private:
     SDL_Rect rect;
+    SDL_Color color;
 
 public:
-    explicit Block(const SDL_Rect& rect);
-    explicit Block(int x, int y);
+    explicit Block(const SDL_Rect& rect, SDL_Color color);
+    explicit Block(int x, int y, SDL_Color color);
 
     const SDL_Rect& getRect() const;
     SDL_Rect& getRect();
