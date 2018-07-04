@@ -1,12 +1,15 @@
 #include "GameManager.h"
 
 #include "GameObject.h"
+#include "State.h"
 
-GameManager::GameManager() = default;
+GameManager::GameManager(State& state):state(state) {}
 
 void GameManager::process() {
-    for (const auto& object : objects) {
-        object->process();
+    if (state.isGameState()) {
+        for (const auto& object : objects) {
+            object->process();
+        }
     }
 }
 

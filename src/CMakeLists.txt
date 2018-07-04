@@ -18,6 +18,8 @@ set(SOURCE_FILES
         Game.h
         Piece.cpp
         Piece.h
+        State.cpp
+        State.h
 )
 
 add_executable(${EXE_NAME} ${SOURCE_FILES})

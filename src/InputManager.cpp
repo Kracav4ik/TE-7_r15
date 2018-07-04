@@ -2,12 +2,14 @@
 
 #include <SDL2/SDL_events.h>
 
-InputManager::InputManager() {
+InputManager::InputManager(State& state) {
     keyBind[SDLK_ESCAPE] = GameEvent::QuitGame;
     keyBind[SDLK_DOWN] = GameEvent::MoveDown;
     keyBind[SDLK_LEFT] = GameEvent::MoveLeft;
     keyBind[SDLK_RIGHT] = GameEvent::MoveRight;
     keyBind[SDLK_SPACE] = GameEvent::SpawnPiece;
+    keyBind[SDLK_BACKSPACE] = GameEvent::RemovePieces;
+    keyBind[SDLK_KP_ENTER] = GameEvent::LaunchStopGame;
 }
 
 void InputManager::handleInput() {

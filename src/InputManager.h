@@ -13,7 +13,7 @@ public:
 
 private:
     friend class Singleton<InputManager>;
-    InputManager();
+    explicit InputManager(State& state);
     std::map<SDL_Keycode, GameEvent> keyBind;
     std::multimap<GameEvent, CallbackType> callbacks;
 

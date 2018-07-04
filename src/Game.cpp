@@ -72,3 +72,8 @@ void Game::createRandomPiece(int x, int y) {
     addPiece(Piece::create(static_cast<Form>(std::rand() % static_cast<int>(Form::End))));
     activePiece->translate(x, y);
 }
+
+void Game::deleteAllPieces() {
+    activePiece.reset();
+    pieces.clear();
+}

@@ -4,6 +4,7 @@
 #include "GameManager.h"
 #include "Piece.h"
 #include "Game.h"
+#include "State.h"
 
 #include <SDL2/SDL.h>
 #include <iostream>
@@ -22,9 +23,11 @@ int main(int argc, char* argv[]) {
         return 1;
     }
 
-    auto& input = InputManager::get();
-    auto& gameManager = GameManager::get();
-    auto& render = RenderManager::get();
+    State state(GameState::Menu);
+
+    auto& input = InputManager::get(state);
+    auto& gameManager = GameManager::get(state);
+    auto& render = RenderManager::get(state);
 
     auto game = std::make_shared<Game>();
     game->createRandomPiece(SCREEN_WIDTH/2, 0);
@@ -32,17 +35,36 @@ int main(int argc, char* argv[]) {
     input.subscribe(GameEvent::QuitGame, [&quit]() {
         quit = true;
     });
-    input.subscribe(GameEvent::MoveRight, [&game]() {
-        game->moveRight();
+    input.subscribe(GameEvent::LaunchStopGame, [&state]() {
+        state.changeState();
     });
-    input.subscribe(GameEvent::SpawnPiece, [&game]() {
-        game->createRandomPiece(SCREEN_WIDTH/2, 0);
+
+    input.subscribe(GameEvent::MoveRight, [&game, &state]() {
+        if (state.isGameState()) {
+            game->moveRight();
+        }
     });
-    input.subscribe(GameEvent::MoveDown, [&game]() {
-        game->moveDown();
+
+    input.subscribe(GameEvent::RemovePieces, [&game, &state]() {
+        if (state.isGameState()) {
+            game->deleteAllPieces();
+        }
     });
-    input.subscribe(GameEvent::MoveLeft, [&game]() {
-        game->moveLeft();
+
+    input.subscribe(GameEvent::SpawnPiece, [&game, &state]() {
+        if (state.isGameState()) {
+            game->createRandomPiece(SCREEN_WIDTH/2, 0);
+        }
+    });
+    input.subscribe(GameEvent::MoveDown, [&game, &state]() {
+        if (state.isGameState()) {
+            game->moveDown();
+        }
+    });
+    input.subscribe(GameEvent::MoveLeft, [&game, &state]() {
+        if (state.isGameState()) {
+            game->moveLeft();
+        }
     });
 
     render.addRenderable(game);

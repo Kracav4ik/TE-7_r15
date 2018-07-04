@@ -22,4 +22,6 @@ public:
     void addPiece(std::shared_ptr<Piece> piece);
 
     int collideWithLevel(int dx, int dy) const;
+
+    void deleteAllPieces();
 };

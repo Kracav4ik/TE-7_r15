@@ -1,10 +1,12 @@
 #pragma once
 
+class State;
+
 template <typename T>
 class Singleton {
 public:
-    static T& get() {
-        static T inst;
+    static T& get(State& state) {
+        static T inst(state);
         return inst;
     }
 
