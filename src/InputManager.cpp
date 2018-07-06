@@ -10,6 +10,7 @@ InputManager::InputManager(State& state) {
     keyBind[SDLK_SPACE] = GameEvent::SpawnPiece;
     keyBind[SDLK_BACKSPACE] = GameEvent::RemovePieces;
     keyBind[SDLK_KP_ENTER] = GameEvent::LaunchStopGame;
+    keyBind[SDLK_RETURN] = GameEvent::LaunchStopGame;
 }
 
 void InputManager::handleInput() {

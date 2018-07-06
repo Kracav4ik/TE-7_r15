@@ -30,5 +30,9 @@ add_custom_command(
         TARGET ${EXE_NAME} PRE_BUILD
         COMMAND ${CMAKE_COMMAND} -E copy
         ${SDL2_PATH}/bin/SDL2.dll
+        ${SDL2_PATH}/bin/SDL2_ttf.dll
+        ${SDL2_PATH}/bin/zlib1.dll
+        ${SDL2_PATH}/bin/libfreetype-6.dll
+        ${DATA_PATH}/FreeSans.ttf
         ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}
 )
