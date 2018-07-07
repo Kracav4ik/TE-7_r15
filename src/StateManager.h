@@ -29,6 +29,8 @@ public:
 
     void popState();
 
+    bool handleKey(SDL_Keycode key) override;
+
     std::shared_ptr<State> getCurrentState();
     std::shared_ptr<State> getCurrentState() const;
 

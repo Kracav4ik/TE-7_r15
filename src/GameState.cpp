@@ -5,6 +5,12 @@
 extern const int SCREEN_WIDTH;
 
 GameState::GameState(): State(AppState::Game) {
+    addKeyBind(SDLK_DOWN, GameEvent::MoveDown);
+    addKeyBind(SDLK_LEFT, GameEvent::MoveLeft);
+    addKeyBind(SDLK_RIGHT, GameEvent::MoveRight);
+    addKeyBind(SDLK_SPACE, GameEvent::SpawnPiece);
+    addKeyBind(SDLK_BACKSPACE, GameEvent::RemovePieces);
+
     game.createRandomPiece(SCREEN_WIDTH/2, 0);
 
     subscribe(GameEvent::MoveRight, [this]() {

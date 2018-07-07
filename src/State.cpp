@@ -24,3 +24,15 @@ void State::handleEvent(GameEvent event) {
 void State::subscribe(GameEvent event, CallbackType callback) {
     callbacks.emplace(event, std::move(callback));
 }
+
+bool State::handleKey(SDL_Keycode key) {
+    if (keyBind.count(key)) {
+        handleEvent(keyBind[key]);
+        return true;
+    }
+    return false;
+}
+
+void State::addKeyBind(SDL_Keycode key, GameEvent event) {
+    keyBind[key] = event;
+}

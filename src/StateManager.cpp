@@ -4,6 +4,10 @@
 #include "GameState.h"
 
 StateManager::StateManager() : State(AppState::NoState) {
+    addKeyBind(SDLK_ESCAPE, GameEvent::QuitGame);
+    addKeyBind(SDLK_KP_ENTER, GameEvent::LaunchStopGame);
+    addKeyBind(SDLK_RETURN, GameEvent::LaunchStopGame);
+
     subscribe(GameEvent::LaunchStopGame, [this]() {
         if (getCurrentState()->isGameState()) {
             popState();
@@ -34,6 +38,13 @@ std::shared_ptr<State> StateManager::getCurrentState() const {
 
 void StateManager::pushState(const std::shared_ptr<State>& state) {
     states.push(state);
+}
+
+bool StateManager::handleKey(SDL_Keycode key) {
+    if (State::handleKey(key)) {
+        return true;
+    }
+    return getCurrentState()->handleKey(key);
 }
 
 void StateManager::popState() {

@@ -3,6 +3,7 @@
 #include "GameObject.h"
 #include "Renderable.h"
 
+#include <SDL2/SDL_keycode.h>
 #include <functional>
 #include <map>
 
@@ -27,6 +28,7 @@ public:
     bool isGameState() const;
 
     virtual void handleEvent(GameEvent event);
+    virtual bool handleKey(SDL_Keycode key);
 
     State(State&&) = delete;
     State(const State&) = delete;
@@ -35,7 +37,9 @@ private:
     AppState currentState;
     std::multimap<GameEvent, CallbackType> callbacks;
 
+    std::map<SDL_Keycode, GameEvent> keyBind;
 protected:
     void subscribe(GameEvent event, CallbackType callback);
 
+    void addKeyBind(SDL_Keycode key, GameEvent event);
 };
