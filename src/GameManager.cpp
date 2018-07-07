@@ -3,13 +3,11 @@
 #include "GameObject.h"
 #include "State.h"
 
-GameManager::GameManager(State& state):state(state) {}
+GameManager::GameManager() = default;
 
 void GameManager::process() {
-    if (state.isGameState()) {
-        for (const auto& object : objects) {
-            object->process();
-        }
+    for (const auto& object : objects) {
+        object->process();
     }
 }
 

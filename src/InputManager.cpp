@@ -1,8 +1,10 @@
 #include "InputManager.h"
 
+#include "StateManager.h"
+
 #include <SDL2/SDL_events.h>
 
-InputManager::InputManager(State& state) {
+InputManager::InputManager() {
     keyBind[SDLK_ESCAPE] = GameEvent::QuitGame;
     keyBind[SDLK_DOWN] = GameEvent::MoveDown;
     keyBind[SDLK_LEFT] = GameEvent::MoveLeft;
@@ -29,12 +31,5 @@ void InputManager::handleInput() {
 }
 
 void InputManager::handleEvent(GameEvent event) {
-    auto range = callbacks.equal_range(event);
-    for (auto it = range.first; it != range.second; ++it) {
-        it->second();
-    }
-}
-
-void InputManager::subscribe(GameEvent event, CallbackType callback) {
-    callbacks.emplace(event, std::move(callback));
+    StateManager::get()->handleEvent(event);
 }

@@ -1,12 +1,12 @@
 #pragma once
 
-class State;
+#include <memory>
 
 template <typename T>
 class Singleton {
 public:
-    static T& get(State& state) {
-        static T inst(state);
+    static std::shared_ptr<T> get() {
+        static std::shared_ptr<T> inst{new T()};
         return inst;
     }
 

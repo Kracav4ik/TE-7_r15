@@ -1,15 +1,26 @@
 #include "State.h"
 
-State::State(GameState currentState): currentState(currentState) {}
+#include "GameEvent.h"
 
-void State::changeState() {
-    if (currentState == GameState::Menu) {
-        currentState = GameState::Game;
-    } else {
-        currentState = GameState::Menu;
+State::State(AppState currentState): currentState(currentState) {}
+
+bool State::isGameState() const {
+    return currentState == AppState::Game;
+}
+
+void State::process() {
+}
+
+void State::render(SDL_Surface* surface) const {
+}
+
+void State::handleEvent(GameEvent event) {
+    auto range = callbacks.equal_range(event);
+    for (auto it = range.first; it != range.second; ++it) {
+        it->second();
     }
 }
 
-bool State::isGameState() const {
-    return currentState == GameState::Game;
+void State::subscribe(GameEvent event, CallbackType callback) {
+    callbacks.emplace(event, std::move(callback));
 }

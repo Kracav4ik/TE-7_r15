@@ -4,14 +4,15 @@
 #include "GameManager.h"
 #include "Piece.h"
 #include "Game.h"
-#include "State.h"
+#include "StateManager.h"
+#include "MenuState.h"
 
 #include <SDL2/SDL.h>
 #include <iostream>
 #include <SDL2/SDL_ttf.h>
 
-const int SCREEN_WIDTH = 700;
-const int SCREEN_HEIGHT = 500;
+extern const int SCREEN_WIDTH = 700;
+extern const int SCREEN_HEIGHT = 500;
 const char* const NAME = "SDL2 Window";
 
 int main(int argc, char* argv[]) {
@@ -25,58 +26,21 @@ int main(int argc, char* argv[]) {
         return 1;
     }
 
-    State state(GameState::Menu);
+    auto input = InputManager::get();
+    auto gameManager = GameManager::get();
+    auto render = RenderManager::get();
+    auto state = StateManager::get();
 
-    auto& input = InputManager::get(state);
-    auto& gameManager = GameManager::get(state);
-    auto& render = RenderManager::get(state);
+    state->pushState(std::static_pointer_cast<State>(std::make_shared<MenuState>()));
 
-    auto game = std::make_shared<Game>();
-    game->createRandomPiece(SCREEN_WIDTH/2, 0);
-    bool quit = false;
-    input.subscribe(GameEvent::QuitGame, [&quit]() {
-        quit = true;
-    });
-    input.subscribe(GameEvent::LaunchStopGame, [&state]() {
-        state.changeState();
-    });
-
-    input.subscribe(GameEvent::MoveRight, [&game, &state]() {
-        if (state.isGameState()) {
-            game->moveRight();
-        }
-    });
-
-    input.subscribe(GameEvent::RemovePieces, [&game, &state]() {
-        if (state.isGameState()) {
-            game->deleteAllPieces();
-        }
-    });
-
-    input.subscribe(GameEvent::SpawnPiece, [&game, &state]() {
-        if (state.isGameState()) {
-            game->createRandomPiece(SCREEN_WIDTH/2, 0);
-        }
-    });
-    input.subscribe(GameEvent::MoveDown, [&game, &state]() {
-        if (state.isGameState()) {
-            game->moveDown();
-        }
-    });
-    input.subscribe(GameEvent::MoveLeft, [&game, &state]() {
-        if (state.isGameState()) {
-            game->moveLeft();
-        }
-    });
-
-    render.addRenderable(game);
-    gameManager.addGameObject(game);
+    render->addRenderable(state);
+    gameManager->addGameObject(state);
 
     auto screenSurface = SDL_GetWindowSurface(window);
-    while (!quit) {
-        input.handleInput();
-        gameManager.process();
-        render.render(screenSurface, window);
+    while (!state->isQuit()) {
+        input->handleInput();
+        gameManager->process();
+        render->render(screenSurface, window);
         SDL_Delay(20);
     }
 

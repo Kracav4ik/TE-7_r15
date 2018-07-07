@@ -11,9 +11,8 @@ class State;
 class GameManager: public Singleton<GameManager> {
 private:
     friend class Singleton<GameManager>;
-    explicit GameManager(State& state);
+    GameManager();
     std::vector<std::shared_ptr<GameObject>> objects;
-    State& state;
 
 public:
     void process();

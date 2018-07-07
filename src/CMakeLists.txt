@@ -20,6 +20,14 @@ set(SOURCE_FILES
         Piece.h
         State.cpp
         State.h
+        Menu.cpp
+        Menu.h
+        StateManager.cpp
+        StateManager.h
+        GameState.cpp
+        GameState.h
+        MenuState.cpp
+        MenuState.h
 )
 
 add_executable(${EXE_NAME} ${SOURCE_FILES})
