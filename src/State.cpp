@@ -1,12 +1,9 @@
 #include "State.h"
 
 #include "GameEvent.h"
+#include "StateManager.h"
 
 State::State(AppState currentState): currentState(currentState) {}
-
-bool State::isGameState() const {
-    return currentState == AppState::Game;
-}
 
 void State::process() {
 }
@@ -27,7 +24,7 @@ void State::subscribe(GameEvent event, CallbackType callback) {
 
 bool State::handleKey(SDL_Keycode key) {
     if (keyBind.count(key)) {
-        handleEvent(keyBind[key]);
+        StateManager::get()->handleEvent(keyBind[key]);
         return true;
     }
     return false;

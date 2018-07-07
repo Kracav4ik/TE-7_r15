@@ -4,16 +4,11 @@
 #include "GameState.h"
 
 StateManager::StateManager() : State(AppState::NoState) {
-    addKeyBind(SDLK_ESCAPE, GameEvent::QuitGame);
-    addKeyBind(SDLK_KP_ENTER, GameEvent::LaunchStopGame);
-    addKeyBind(SDLK_RETURN, GameEvent::LaunchStopGame);
-
-    subscribe(GameEvent::LaunchStopGame, [this]() {
-        if (getCurrentState()->isGameState()) {
-            popState();
-        } else {
-            pushState<GameState>();
-        }
+    subscribe(GameEvent::BeginGame, [this]() {
+        pushState<GameState>();
+    });
+    subscribe(GameEvent::ExitToMainMenu, [this]() {
+        popState();
     });
     subscribe(GameEvent::QuitGame, [this]() {
         quit = true;

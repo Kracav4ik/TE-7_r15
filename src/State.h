@@ -25,8 +25,6 @@ public:
 
     void render(SDL_Surface* surface) const override;
 
-    bool isGameState() const;
-
     virtual void handleEvent(GameEvent event);
     virtual bool handleKey(SDL_Keycode key);
 

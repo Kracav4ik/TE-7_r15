@@ -28,6 +28,8 @@ set(SOURCE_FILES
         GameState.h
         MenuState.cpp
         MenuState.h
+        Button.cpp
+        Button.h
 )
 
 add_executable(${EXE_NAME} ${SOURCE_FILES})
