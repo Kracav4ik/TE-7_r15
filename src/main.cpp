@@ -31,7 +31,7 @@ int main(int argc, char* argv[]) {
     auto render = RenderManager::get();
     auto state = StateManager::get();
 
-    state->pushState(std::static_pointer_cast<State>(std::make_shared<MenuState>()));
+    state->pushState<MenuState>();
 
     render->addRenderable(state);
     gameManager->addGameObject(state);

@@ -8,7 +8,7 @@ StateManager::StateManager() : State(AppState::NoState) {
         if (getCurrentState()->isGameState()) {
             popState();
         } else {
-            pushState(std::static_pointer_cast<State>(std::make_shared<GameState>()));
+            pushState<GameState>();
         }
     });
     subscribe(GameEvent::QuitGame, [this]() {

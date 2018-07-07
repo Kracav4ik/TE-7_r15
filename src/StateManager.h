@@ -21,6 +21,10 @@ public:
 
     void render(SDL_Surface* surface) const override;
 
+    template<typename StateClass>
+    void pushState() {
+        pushState(std::static_pointer_cast<State>(std::make_shared<StateClass>()));
+    }
     void pushState(const std::shared_ptr<State>& state);
 
     void popState();
