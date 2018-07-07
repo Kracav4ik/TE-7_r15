@@ -1,5 +1,11 @@
 #include "Game.h"
 
+#include <algorithm>
+
+int manhDist(const SDL_Point& point) {
+    return std::abs(point.x) + std::abs(point.y);
+}
+
 void Game::addPiece(std::shared_ptr<Piece> piece) {
     activePiece = piece;
 
@@ -18,7 +24,7 @@ void Game::process() {
 }
 
 int Game::collideWithLevel(int dx, int dy) const {
-    int collideDelta = 0;
+    std::vector<SDL_Point> collideDelta;
     for (const auto& piece : pieces) {
         if (activePiece == piece) {
             continue;
@@ -29,16 +35,23 @@ int Game::collideWithLevel(int dx, int dy) const {
                 newBlock.translate(dx, dy);
                 if (SDL_HasIntersection(&newBlock.getRect(), &b2.getRect())) {
                     if (dx == 0) {
-                        collideDelta = BLOCK_SIZE - std::abs(newBlock.getRect().y - b2.getRect().y);
+                        collideDelta.emplace_back(SDL_Point{0, BLOCK_SIZE - std::abs(newBlock.getRect().y - b2.getRect().y)});
                     } else {
-                        collideDelta = BLOCK_SIZE - std::abs(newBlock.getRect().x - b2.getRect().x);
+                        collideDelta.emplace_back(SDL_Point{BLOCK_SIZE - std::abs(newBlock.getRect().x - b2.getRect().x), 0});
                     }
-                    break;
                 }
             }
         }
     }
-    return collideDelta;
+    if (collideDelta.empty()) {
+        return 0;
+    } else {
+        auto cmp = [](const SDL_Point& p1, const SDL_Point& p2) {
+            return manhDist(p1) > manhDist(p2);
+        };
+        const SDL_Point& res = *std::min_element(collideDelta.begin(), collideDelta.end(), cmp);
+        return manhDist(res);
+    };
 }
 
 void Game::render(SDL_Surface* surface) const {
@@ -57,7 +70,7 @@ void Game::moveRight() {
 void Game::moveLeft() {
     if (activePiece) {
         int dx = collideWithLevel(-BLOCK_SIZE, 0);
-        activePiece->translate(dx-BLOCK_SIZE, 0);
+        activePiece->translate(dx - BLOCK_SIZE, 0);
     }
 }
 
