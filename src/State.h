@@ -12,6 +12,7 @@ enum class GameEvent;
 enum class AppState {
     Menu,
     Game,
+    Transparent,
     NoState, // special state for StateManager which is a State too
 };
 
@@ -27,6 +28,7 @@ public:
 
     virtual void handleEvent(GameEvent event);
     virtual bool handleKey(SDL_Keycode key);
+    AppState getCurrentState() const;
 
     State(State&&) = delete;
     State(const State&) = delete;

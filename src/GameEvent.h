@@ -6,6 +6,8 @@ enum class GameEvent {
     MenuMoveDown,
     MenuSelect,
     BeginGame,
+    BackToGame,
+    Pause,
     ExitToMainMenu,
     MoveLeft,
     MoveRight,

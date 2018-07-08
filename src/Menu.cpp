@@ -10,7 +10,9 @@ extern const int SCREEN_WIDTH;
 extern const int SCREEN_HEIGHT;
 
 void Menu::render(SDL_Surface* surface) const {
-    SDL_FillRect(surface, nullptr, SDL_MapRGB(surface->format, 0xFF, 0xFF, 0xFF));
+    if (!transparent) {
+        SDL_FillRect(surface, nullptr, SDL_MapRGB(surface->format, 0xFF, 0xFF, 0xFF));
+    }
     for (const auto& button : buttons) {
         button->render(surface);
     }
@@ -21,6 +23,9 @@ void Menu::addButton(std::string text, GameEvent event) {
     int buttonDist = SCREEN_HEIGHT / buttons.size();
     int curButtonDist = buttonDist/2;
     for (auto& button : buttons) {
+        if (transparent) {
+            button->setTextMargin({0, 0});
+        }
         button->setCenter({SCREEN_WIDTH/2, curButtonDist});
         curButtonDist += buttonDist;
     }
@@ -46,3 +51,5 @@ void Menu::menuMoveUp() {
 void Menu::pressSelectedButton() {
     StateManager::get()->handleEvent(buttons[currentButton]->getEvent());
 }
+
+Menu::Menu(bool transparent) : transparent(transparent) {}

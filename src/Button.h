@@ -25,6 +25,7 @@ public:
     virtual ~Button();
 
     GameEvent getEvent() const;
+    void setTextMargin(const SDL_Point& margin);
     bool highlight = false;
     void setCenter(const SDL_Point& centerPos);
     void render(SDL_Surface* surface) const override;

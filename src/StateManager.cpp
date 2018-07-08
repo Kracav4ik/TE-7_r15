@@ -2,12 +2,29 @@
 
 #include "GameEvent.h"
 #include "GameState.h"
+#include "TransparentState.h"
 
 StateManager::StateManager() : State(AppState::NoState) {
     subscribe(GameEvent::BeginGame, [this]() {
         pushState<GameState>();
     });
+    subscribe(GameEvent::Pause, [this]() {
+        pushState<TransparentState>();
+    });
     subscribe(GameEvent::ExitToMainMenu, [this]() {
+        switch (getCurrentState()->getCurrentState()){
+            case AppState::Menu:break;
+            case AppState::Game:
+                popState();
+                break;
+            case AppState::Transparent:
+                popState();
+                popState();
+                break;
+            case AppState::NoState:break;
+        }
+    });
+    subscribe(GameEvent::BackToGame, [this]() {
         popState();
     });
     subscribe(GameEvent::QuitGame, [this]() {

@@ -46,3 +46,7 @@ void Button::setCenter(const SDL_Point& centerPos) {
 GameEvent Button::getEvent() const {
     return event;
 }
+
+void Button::setTextMargin(const SDL_Point& margin) {
+    textMargin = margin;
+}

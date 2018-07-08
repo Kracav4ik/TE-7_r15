@@ -33,3 +33,7 @@ bool State::handleKey(SDL_Keycode key) {
 void State::addKeyBind(SDL_Keycode key, GameEvent event) {
     keyBind[key] = event;
 }
+
+AppState State::getCurrentState() const {
+    return currentState;
+}

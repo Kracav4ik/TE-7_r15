@@ -5,7 +5,7 @@
 extern const int SCREEN_WIDTH;
 
 GameState::GameState(): State(AppState::Game) {
-    addKeyBind(SDLK_ESCAPE, GameEvent::ExitToMainMenu);
+    addKeyBind(SDLK_ESCAPE, GameEvent::Pause);
     addKeyBind(SDLK_DOWN, GameEvent::MoveDown);
     addKeyBind(SDLK_LEFT, GameEvent::MoveLeft);
     addKeyBind(SDLK_RIGHT, GameEvent::MoveRight);
