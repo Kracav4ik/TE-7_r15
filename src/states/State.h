@@ -20,7 +20,7 @@ class State: public Renderable, public GameObject  {
 public:
     using CallbackType = std::function<void()>;
 
-    explicit State(AppState currentState);
+    explicit State(AppState appState);
 
     void process() override;
 
@@ -29,13 +29,13 @@ public:
 
     virtual void handleEvent(GameEvent event);
     virtual bool handleKey(SDL_Keycode key);
-    AppState getCurrentState() const;
+    AppState getAppState() const;
 
     State(State&&) = delete;
     State(const State&) = delete;
 
 private:
-    AppState currentState;
+    const AppState appState;
     std::multimap<GameEvent, CallbackType> callbacks;
 
     std::map<SDL_Keycode, GameEvent> keyBind;

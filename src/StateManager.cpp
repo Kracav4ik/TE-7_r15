@@ -12,20 +12,10 @@ StateManager::StateManager() : State(AppState::NoState) {
         pushState<InGameMenuState>();
     });
     subscribe(GameEvent::ExitToMainMenu, [this]() {
-        switch (getCurrentState()->getCurrentState()){
-            case AppState::MainMenu:break;
-            case AppState::Game:
-                popState();
-                break;
-            case AppState::InGameMenu:
-                popState();
-                popState();
-                break;
-            case AppState::NoState:break;
-        }
+        popStateTo(AppState::MainMenu);
     });
     subscribe(GameEvent::BackToGame, [this]() {
-        popState();
+        popStateTo(AppState::Game);
     });
     subscribe(GameEvent::QuitGame, [this]() {
         quit = true;
@@ -68,8 +58,10 @@ bool StateManager::handleKey(SDL_Keycode key) {
     return getCurrentState()->handleKey(key);
 }
 
-void StateManager::popState() {
-    states.pop_back();
+void StateManager::popStateTo(AppState targetState) {
+    while (states.size() > 1 && getCurrentState()->getAppState() != targetState) {
+        states.pop_back();
+    }
 }
 
 void StateManager::handleEvent(GameEvent event) {

@@ -27,7 +27,7 @@ public:
     }
     void pushState(const std::shared_ptr<State>& state);
 
-    void popState();
+    void popStateTo(AppState targetState);
 
     bool handleKey(SDL_Keycode key) override;
 

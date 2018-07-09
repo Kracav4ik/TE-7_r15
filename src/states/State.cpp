@@ -3,7 +3,7 @@
 #include "GameEvent.h"
 #include "StateManager.h"
 
-State::State(AppState currentState): currentState(currentState) {}
+State::State(AppState appState): appState(appState) {}
 
 void State::process() {
 }
@@ -38,6 +38,6 @@ void State::addKeyBind(SDL_Keycode key, GameEvent event) {
     keyBind[key] = event;
 }
 
-AppState State::getCurrentState() const {
-    return currentState;
+AppState State::getAppState() const {
+    return appState;
 }
