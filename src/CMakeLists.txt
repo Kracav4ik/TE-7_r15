@@ -18,20 +18,20 @@ set(SOURCE_FILES
         Game.h
         Piece.cpp
         Piece.h
-        State.cpp
-        State.h
+        states/State.cpp
+        states/State.h
         Menu.cpp
         Menu.h
         StateManager.cpp
         StateManager.h
-        GameState.cpp
-        GameState.h
-        MenuState.cpp
-        MenuState.h
+        states/GameState.cpp
+        states/GameState.h
+        states/MenuState.cpp
+        states/MenuState.h
         Button.cpp
         Button.h
-        InGameMenuState.cpp
-        InGameMenuState.h
+        states/InGameMenuState.cpp
+        states/InGameMenuState.h
 )
 
 add_executable(${EXE_NAME} ${SOURCE_FILES})

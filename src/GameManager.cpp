@@ -1,7 +1,7 @@
 #include "GameManager.h"
 
 #include "GameObject.h"
-#include "State.h"
+#include "states/State.h"
 
 GameManager::GameManager() = default;
 

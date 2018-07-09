@@ -1,8 +1,8 @@
 #include "StateManager.h"
 
 #include "GameEvent.h"
-#include "GameState.h"
-#include "InGameMenuState.h"
+#include "states/GameState.h"
+#include "states/InGameMenuState.h"
 
 StateManager::StateManager() : State(AppState::NoState) {
     subscribe(GameEvent::BeginGame, [this]() {

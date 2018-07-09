@@ -5,7 +5,7 @@
 #include "Piece.h"
 #include "Game.h"
 #include "StateManager.h"
-#include "MenuState.h"
+#include "states/MenuState.h"
 
 #include <SDL2/SDL.h>
 #include <iostream>
