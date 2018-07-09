@@ -26,8 +26,8 @@ set(SOURCE_FILES
         StateManager.h
         states/GameState.cpp
         states/GameState.h
-        states/MenuState.cpp
-        states/MenuState.h
+        states/MainMenuState.cpp
+        states/MainMenuState.h
         Button.cpp
         Button.h
         states/InGameMenuState.cpp

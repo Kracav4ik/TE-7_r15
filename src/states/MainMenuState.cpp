@@ -1,6 +1,6 @@
-#include "MenuState.h"
+#include "MainMenuState.h"
 
-MenuState::MenuState() : State(AppState::Menu) {
+MainMenuState::MainMenuState() : State(AppState::MainMenu) {
     menu.addButton("Start", GameEvent::BeginGame);
     menu.addButton("Exit", GameEvent::QuitGame);
 
@@ -20,9 +20,9 @@ MenuState::MenuState() : State(AppState::Menu) {
     });
 }
 
-void MenuState::process() {
+void MainMenuState::process() {
 }
 
-void MenuState::render(SDL_Surface* surface) const {
+void MainMenuState::render(SDL_Surface* surface) const {
     menu.render(surface);
 }

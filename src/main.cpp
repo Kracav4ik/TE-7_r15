@@ -5,7 +5,7 @@
 #include "Piece.h"
 #include "Game.h"
 #include "StateManager.h"
-#include "states/MenuState.h"
+#include "states/MainMenuState.h"
 
 #include <SDL2/SDL.h>
 #include <iostream>
@@ -31,7 +31,7 @@ int main(int argc, char* argv[]) {
     auto render = RenderManager::get();
     auto state = StateManager::get();
 
-    state->pushState<MenuState>();
+    state->pushState<MainMenuState>();
 
     render->addRenderable(state);
     gameManager->addGameObject(state);

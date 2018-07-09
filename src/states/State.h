@@ -10,7 +10,7 @@
 enum class GameEvent;
 
 enum class AppState {
-    Menu,
+    MainMenu,
     Game,
     InGameMenu,
     NoState, // special state for StateManager which is a State too

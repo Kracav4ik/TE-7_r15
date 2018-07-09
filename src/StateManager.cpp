@@ -13,7 +13,7 @@ StateManager::StateManager() : State(AppState::NoState) {
     });
     subscribe(GameEvent::ExitToMainMenu, [this]() {
         switch (getCurrentState()->getCurrentState()){
-            case AppState::Menu:break;
+            case AppState::MainMenu:break;
             case AppState::Game:
                 popState();
                 break;

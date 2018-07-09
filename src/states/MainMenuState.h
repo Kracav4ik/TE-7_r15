@@ -3,12 +3,12 @@
 #include "State.h"
 #include "Menu.h"
 
-class MenuState: public State {
+class MainMenuState: public State {
 private:
     Menu menu;
 
 public:
-    MenuState();
+    MainMenuState();
 
     void process() override;
 
