@@ -32,6 +32,8 @@ set(SOURCE_FILES
         Button.h
         states/InGameMenuState.cpp
         states/InGameMenuState.h
+        states/MenuStateBase.cpp
+        states/MenuStateBase.h
 )
 
 add_executable(${EXE_NAME} ${SOURCE_FILES})

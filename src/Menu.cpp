@@ -10,9 +10,6 @@ extern const int SCREEN_WIDTH;
 extern const int SCREEN_HEIGHT;
 
 void Menu::render(SDL_Surface* surface) const {
-    if (!transparent) {
-        SDL_FillRect(surface, nullptr, SDL_MapRGB(surface->format, 0xFF, 0xFF, 0xFF));
-    }
     for (const auto& button : buttons) {
         button->render(surface);
     }
@@ -48,5 +45,3 @@ void Menu::menuMoveUp() {
 void Menu::pressSelectedButton() {
     StateManager::get()->handleEvent(buttons[currentButton]->getEvent());
 }
-
-Menu::Menu(bool transparent) : transparent(transparent) {}

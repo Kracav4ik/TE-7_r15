@@ -14,11 +14,8 @@ private:
     std::vector<std::unique_ptr<Button>> buttons;
 
     void updateButtonSelection();
-    bool transparent;
 
 public:
-    Menu(bool transparent = false);
-
     void render(SDL_Surface* surface) const override;
     void addButton(std::string text, GameEvent event);
     void menuMoveDown();

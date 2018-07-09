@@ -1,16 +1,9 @@
 #pragma once
 
-#include "State.h"
-#include "Menu.h"
+#include "MenuStateBase.h"
 
-class MainMenuState: public State {
-private:
-    Menu menu;
-
+class MainMenuState: public MenuStateBase {
 public:
     MainMenuState();
-
-    void process() override;
-
     void render(SDL_Surface* surface) const override;
 };
