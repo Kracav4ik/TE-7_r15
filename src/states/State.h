@@ -24,6 +24,7 @@ public:
 
     void process() override;
 
+    virtual bool isTransparent() const;
     void render(SDL_Surface* surface) const override;
 
     virtual void handleEvent(GameEvent event);

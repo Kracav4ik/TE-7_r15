@@ -3,7 +3,7 @@
 #include "Singleton.h"
 #include "states/State.h"
 
-#include <stack>
+#include <vector>
 #include <memory>
 
 class StateManager: public Singleton<StateManager>, public State {
@@ -11,7 +11,7 @@ private:
     friend class Singleton<StateManager>;
     StateManager();
 
-    std::stack<std::shared_ptr<State>> states;
+    std::vector<std::shared_ptr<State>> states;
     bool quit = false;
 
 public:

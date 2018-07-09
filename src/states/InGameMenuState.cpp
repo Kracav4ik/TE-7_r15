@@ -7,6 +7,10 @@ InGameMenuState::InGameMenuState() : MenuStateBase(AppState::InGameMenu) {
     addKeyBind(SDLK_ESCAPE, GameEvent::BackToGame);
 }
 
+bool InGameMenuState::isTransparent() const {
+    return true;
+}
+
 void InGameMenuState::render(SDL_Surface* surface) const {
     menu.render(surface);
 }

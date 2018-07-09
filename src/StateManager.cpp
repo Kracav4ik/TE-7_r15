@@ -37,19 +37,28 @@ void StateManager::process() {
 }
 
 void StateManager::render(SDL_Surface* surface) const {
-    getCurrentState()->render(surface);
+    int stop = states.size() - 1;
+    for (; stop > 0; --stop) {
+        if (!states[stop]->isTransparent()) {
+            break;
+        }
+    }
+    
+    for (int i = stop; i < states.size(); ++i) {
+        states[i]->render(surface);
+    }
 }
 
 std::shared_ptr<State> StateManager::getCurrentState() {
-    return states.top();
+    return states.back();
 }
 
 std::shared_ptr<State> StateManager::getCurrentState() const {
-    return states.top();
+    return states.back();
 }
 
 void StateManager::pushState(const std::shared_ptr<State>& state) {
-    states.push(state);
+    states.emplace_back(state);
 }
 
 bool StateManager::handleKey(SDL_Keycode key) {
@@ -60,7 +69,7 @@ bool StateManager::handleKey(SDL_Keycode key) {
 }
 
 void StateManager::popState() {
-    states.pop();
+    states.pop_back();
 }
 
 void StateManager::handleEvent(GameEvent event) {

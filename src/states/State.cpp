@@ -8,6 +8,10 @@ State::State(AppState currentState): currentState(currentState) {}
 void State::process() {
 }
 
+bool State::isTransparent() const {
+    return false;
+}
+
 void State::render(SDL_Surface* surface) const {
 }
 
