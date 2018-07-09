@@ -12,7 +12,6 @@ const SDL_Point BUTTON_SIZE = {300, 100};
 class Button : public Renderable {
 private:
     TTF_Font* font;
-    SDL_Point textMargin;
     SDL_Point pos;
     std::string text;
     GameEvent event;
@@ -25,7 +24,6 @@ public:
     virtual ~Button();
 
     GameEvent getEvent() const;
-    void setTextMargin(const SDL_Point& margin);
     bool highlight = false;
     void setCenter(const SDL_Point& centerPos);
     void render(SDL_Surface* surface) const override;

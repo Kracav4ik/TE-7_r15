@@ -17,7 +17,7 @@ void Button::render(SDL_Surface* surface) const {
     SDL_FillRect(surface, &button, SDL_MapRGB(surface->format, buttonColor.r, buttonColor.g, buttonColor.b));
 
     if (SDL_Surface* surfaceMessage = TTF_RenderText_Solid(font, text.c_str(), textColor)) {
-        SDL_Rect text = button + textMargin;
+        SDL_Rect text = button + SDL_Point{(button.w - surfaceMessage->w) /2, (button.h - surfaceMessage->h) /2};
         SDL_BlitSurface(surfaceMessage, nullptr, surface, &text);
         //perhaps we can reuse it, but I assume not for simplicity.
         SDL_FreeSurface(surfaceMessage);
@@ -29,7 +29,6 @@ void Button::render(SDL_Surface* surface) const {
 
 Button::Button(std::string text, GameEvent event)
     : font(TTF_OpenFont("FreeSans.ttf", 60))
-    , textMargin({BUTTON_SIZE.x/3, 10})
     , pos({0, 0})
     , text(std::move(text))
     , event(event)
@@ -45,8 +44,4 @@ void Button::setCenter(const SDL_Point& centerPos) {
 
 GameEvent Button::getEvent() const {
     return event;
-}
-
-void Button::setTextMargin(const SDL_Point& margin) {
-    textMargin = margin;
 }

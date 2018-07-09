@@ -23,9 +23,6 @@ void Menu::addButton(std::string text, GameEvent event) {
     int buttonDist = SCREEN_HEIGHT / buttons.size();
     int curButtonDist = buttonDist/2;
     for (auto& button : buttons) {
-        if (transparent) {
-            button->setTextMargin({0, 0});
-        }
         button->setCenter({SCREEN_WIDTH/2, curButtonDist});
         curButtonDist += buttonDist;
     }
