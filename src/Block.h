@@ -17,6 +17,8 @@ public:
 
     const SDL_Rect& getRect() const;
     SDL_Rect& getRect();
+    SDL_Point getRightBottom();
+    SDL_Point getTopLeft();
 
     void translate(int dx, int dy);
 

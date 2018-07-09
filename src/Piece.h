@@ -29,4 +29,8 @@ public:
     void translate(int dx, int dy);
 
     const std::vector<Block>& getBlocks() const;
+
+    int getRight();
+    int getLeft();
+    int getBottom();
 };

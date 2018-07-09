@@ -2,6 +2,9 @@
 
 #include <algorithm>
 
+extern const int SCREEN_WIDTH;
+extern const int SCREEN_HEIGHT;
+
 int manhDist(const SDL_Point& point) {
     return std::abs(point.x) + std::abs(point.y);
 }
@@ -16,10 +19,16 @@ void Game::process() {
     if (!activePiece) {
         return;
     }
-    if (collideWithLevel(0, 1) == 0) {
+    static bool canStop = true;
+    if (collideWithLevel(0, 1) == 0 && activePiece->getBottom() < SCREEN_HEIGHT) {
         activePiece->translate(0, 1);
+        canStop = false;
     } else {
         activePiece.reset();
+        if (!canStop) {
+            createRandomPiece(SCREEN_WIDTH/2, 0);
+        }
+        canStop = true;
     }
 }
 
@@ -63,21 +72,29 @@ void Game::render(SDL_Surface* surface) const {
 void Game::moveRight() {
     if (activePiece) {
         int dx = collideWithLevel(BLOCK_SIZE, 0);
-        activePiece->translate(BLOCK_SIZE - dx, 0);
+        if (activePiece->getRight() < SCREEN_WIDTH) {
+            activePiece->translate(BLOCK_SIZE - dx, 0);
+        }
     }
 }
 
 void Game::moveLeft() {
     if (activePiece) {
         int dx = collideWithLevel(-BLOCK_SIZE, 0);
-        activePiece->translate(dx - BLOCK_SIZE, 0);
+        if (activePiece->getLeft() > 0) {
+            activePiece->translate(dx - BLOCK_SIZE, 0);
+        }
     }
 }
 
 void Game::moveDown() {
     if (activePiece) {
         int dy = collideWithLevel(0, BLOCK_SIZE);
-        activePiece->translate(0, BLOCK_SIZE - dy);
+        if (activePiece->getBottom() < SCREEN_HEIGHT - BLOCK_SIZE) {
+            activePiece->translate(0, BLOCK_SIZE - dy);
+        } else {
+            activePiece->translate(0, SCREEN_HEIGHT - activePiece->getBottom());
+        }
     }
 }
 

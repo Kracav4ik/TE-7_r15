@@ -50,8 +50,8 @@ std::shared_ptr<Piece> Piece::create(Form form) {
             break;
         case Form::RightTurn:
             newBlocks.emplace_back(BLOCK_SIZE, 0, color);
-            newBlocks.emplace_back(BLOCK_SIZE, -BLOCK_SIZE, color);
-            newBlocks.emplace_back(2*BLOCK_SIZE, -BLOCK_SIZE, color);
+            newBlocks.emplace_back(0, BLOCK_SIZE, color);
+            newBlocks.emplace_back(-BLOCK_SIZE, BLOCK_SIZE, color);
             break;
         case Form::LeftTurn:
             newBlocks.emplace_back(BLOCK_SIZE, 0, color);
@@ -76,4 +76,37 @@ void Piece::translate(int dx, int dy) {
 
 const std::vector<Block>& Piece::getBlocks() const {
     return blocks;
+}
+
+int Piece::getRight() {
+    int res = blocks[0].getRightBottom().x;
+    for (auto& block : blocks) {
+        SDL_Point rightBottom = block.getRightBottom();
+        if (res < rightBottom.x) {
+            res = rightBottom.x;
+        }
+    }
+    return res;
+}
+
+int Piece::getLeft() {
+    int res = blocks[0].getTopLeft().x;
+    for (auto& block : blocks) {
+        SDL_Point rightBottom = block.getTopLeft();
+        if (res > rightBottom.x) {
+            res = rightBottom.x;
+        }
+    }
+    return res;
+}
+
+int Piece::getBottom() {
+    int res = blocks[0].getRightBottom().y;
+    for (auto& block : blocks) {
+        SDL_Point rightBottom = block.getRightBottom();
+        if (res < rightBottom.y) {
+            res = rightBottom.y;
+        }
+    }
+    return res;
 }

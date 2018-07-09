@@ -16,6 +16,14 @@ SDL_Rect& Block::getRect() {
     return rect;
 }
 
+SDL_Point Block::getRightBottom() {
+    return {rect.x + rect.w, rect.y + rect.h};
+}
+
+SDL_Point Block::getTopLeft(){
+    return {rect.x, rect.y};
+}
+
 void Block::render(SDL_Surface* surface) const {
     SDL_FillRect(surface, &rect, SDL_MapRGBA(surface->format, color.r, color.g, color.b, color.a));
 }

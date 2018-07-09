@@ -41,7 +41,7 @@ int main(int argc, char* argv[]) {
         input->handleInput();
         gameManager->process();
         render->render(screenSurface, window);
-        SDL_Delay(20);
+        SDL_Delay(30);
     }
 
     SDL_DestroyWindow(window);
