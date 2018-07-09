@@ -30,8 +30,8 @@ set(SOURCE_FILES
         MenuState.h
         Button.cpp
         Button.h
-        TransparentState.cpp
-        TransparentState.h
+        InGameMenuState.cpp
+        InGameMenuState.h
 )
 
 add_executable(${EXE_NAME} ${SOURCE_FILES})

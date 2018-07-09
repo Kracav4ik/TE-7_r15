@@ -3,11 +3,11 @@
 #include "State.h"
 #include "Menu.h"
 
-class TransparentState : public State {
+class InGameMenuState : public State {
 private:
-    Menu transparent;
+    Menu inGameMenu;
 
 public:
-    TransparentState();
+    InGameMenuState();
     void render(SDL_Surface* surface) const override;
 };

@@ -12,7 +12,7 @@ enum class GameEvent;
 enum class AppState {
     Menu,
     Game,
-    Transparent,
+    InGameMenu,
     NoState, // special state for StateManager which is a State too
 };
 
