@@ -5,6 +5,8 @@
 extern const int SCREEN_WIDTH;
 extern const int SCREEN_HEIGHT;
 
+const int TIME_STEP = 1;
+
 int manhDist(const SDL_Point& point) {
     return std::abs(point.x) + std::abs(point.y);
 }
@@ -20,8 +22,8 @@ void Game::process() {
         return;
     }
     static bool canStop = true;
-    if (collideWithLevel(0, 1) == 0 && activePiece->getBottom() < SCREEN_HEIGHT) {
-        activePiece->translate(0, 1);
+    if (collideWithLevel(0, TIME_STEP) == 0 && activePiece->getBottom() < SCREEN_HEIGHT) {
+        activePiece->translate(0, TIME_STEP);
         canStop = false;
     } else {
         activePiece.reset();
@@ -90,11 +92,9 @@ void Game::moveLeft() {
 void Game::moveDown() {
     if (activePiece) {
         int dy = collideWithLevel(0, BLOCK_SIZE);
-        if (activePiece->getBottom() < SCREEN_HEIGHT - BLOCK_SIZE) {
-            activePiece->translate(0, BLOCK_SIZE - dy);
-        } else {
-            activePiece->translate(0, SCREEN_HEIGHT - activePiece->getBottom());
-        }
+        int screenCollide = SCREEN_HEIGHT - activePiece->getBottom();
+        int piecesCollide = BLOCK_SIZE - dy;
+        activePiece->translate(0, std::min(screenCollide, piecesCollide));
     }
 }
 
